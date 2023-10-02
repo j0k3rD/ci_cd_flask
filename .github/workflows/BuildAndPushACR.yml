@@ -32,7 +32,7 @@ jobs:
                 echo "Commit message does not contain 'deploy' or 'build'."
                 exit 1
             fi
-            if: steps.check_commit.outputs.should_build == 'true'
+        if: steps.check_commit.outputs.should_build == 'true'
       
   build:
     runs-on: ubuntu-latest

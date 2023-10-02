@@ -47,7 +47,7 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-        if: steps.check_commit.outputs.should_deploy == 'true' # Esta acción solo se ejecutará si el mensaje del commit contiene "deploy"
+        if: steps.check_commit.outputs.should_deploy == 'true'
 
       - name: 'Deploy Container Instance'
         uses: azure/aci-deploy@v1
@@ -62,7 +62,7 @@ jobs:
           ports: 5000
           cpu: 1
           memory: 1
-        if: steps.check_commit.outputs.should_deploy == 'true' # Esta acción solo se ejecutará si el mensaje del commit contiene "deploy"
+        if: steps.check_commit.outputs.should_deploy == 'true'
 
       - name: 'Logout'
         run: |

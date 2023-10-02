@@ -32,9 +32,11 @@ jobs:
                 echo "Commit message contains 'deploy' or 'build', skipping build."
                 exit 0
             fi
+        if: steps.check_commit.outputs.should_build == 'false'
 
   build:
     runs-on: ubuntu-latest
+    needs: push
     defaults:
       run:
         shell: bash

@@ -51,7 +51,7 @@ jobs:
       - name: 'Check Commit Message'
         id: check_commit_build
         run: |
-          echo ::set-output name=should_build::$(if [[ "${{ github.event.head_commit.message }}" == *"deploy"* || "${{ github.event.head_commit.message }}" == *"build"* ]]; then echo "true"; else echo "false"; fi)
+          echo ::set-output name=should_build::$(if [[ "${{ github.event.head_commit.message }}" == *"deploy"*]]; then echo "true"; elif [[ "${{ github.event.head_commit.message }}" == *"build"* ]]; then echo "false"; fi)
 
       - name: Checkout code
         uses: actions/checkout@v3
@@ -66,11 +66,11 @@ jobs:
           logout: 'true'
         
       - run: |
-          if [[ "${{ steps.check_commit_build.outputs.should_build }}" == "true" ]]; then
+          if [[ "${{ steps.check_commit_build.outputs.should_build }}" == "false" ]] || [[ "${{ steps.check_commit_build.outputs.should_build }}" == "true" ]]; then
             docker build . -t ${{ env.IMAGE_NAME }}
             docker push ${{ env.IMAGE_NAME }}
           fi
-        if: steps.check_commit_build.outputs.should_build == 'true'
+        if: steps.check_commit_build.outputs.should_build == 'true' || steps.check_commit_build.outputs.should_build == 'false'
         
   deploy:
     runs-on: ubuntu-latest

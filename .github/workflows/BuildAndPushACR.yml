@@ -28,12 +28,13 @@ jobs:
           echo ::set-output name=should_build::$(if [[ "${{ github.event.head_commit.message }}" == *"deploy"* || "${{ github.event.head_commit.message }}" == *"build"* ]]; then echo "true"; else echo "false"; fi)
     
       - run: |
-          if [[ "${{ steps.check_commit.outputs.should_build }}" == "false" ]]; then
-            echo "Commit message does not contain 'deploy' or 'build'."
-            echo "Skipping build and deploy steps."
-            exit 0
-          fi
-        if: steps.check_commit.outputs.should_build == 'false'
+            if [[ "${{ steps.check_commit.outputs.should_build }}" == "true" ]]; then
+            echo "Build and Deploy"
+            else
+            echo "Nothing to do"
+            fi
+        if: steps.check_commit.outputs.should_build == 'true'
+        
 
   build:
     runs-on: ubuntu-latest

@@ -25,13 +25,12 @@ jobs:
       - name: 'Check Commit Message'
         id: check_commit
         run: |
-          echo ::set-output name=should_build::$(if [[ "${{ github.event.head_commit.message }}" != *"deploy"* || "${{ github.event.head_commit.message }}" != *"build"* ]]; then echo "true"; else echo "false"; fi)
+          echo ::set-output name=should_build::$(if [[ "${{ github.event.head_commit.message }}" == *"deploy"* || "${{ github.event.head_commit.message }}" == *"build"* ]]; then echo "false"; else echo "true"; fi)
     
       - run: |
-          if [[ "${{ steps.check_commit.outputs.should_build }}" == "true" ]]; then
+          if [[ "${{ steps.check_commit.outputs.should_build }}" == "false" ]]; then
             echo "Commit message does not contain 'deploy' or 'build'."
             echo "Skipping build and deploy steps."
-
             exit 0
           fi
         if: steps.check_commit.outputs.should_build == 'false'

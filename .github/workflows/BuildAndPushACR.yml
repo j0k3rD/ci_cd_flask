@@ -32,7 +32,7 @@ jobs:
                 echo "Commit message does not contain 'deploy' or 'build'."
                 exit 1
             fi
-        if: steps.check_commit.outputs.should_build == 'true'
+        if: steps.check_commit.outputs.should_build == 'false'
       
   build:
     runs-on: ubuntu-latest
@@ -64,7 +64,7 @@ jobs:
             docker push ${{ env.IMAGE_NAME }}
           fi
         if: steps.check_commit_build.outputs.should_build == 'true'
-
+        
   deploy:
     runs-on: ubuntu-latest
     needs: build

@@ -86,7 +86,6 @@ jobs:
         run: |
           echo ::set-output name=should_deploy::$(if [[ "${{ github.event.head_commit.message }}" == *"deploy"* ]]; then echo "true"; else echo "false"; fi)
 
-
       - name: 'Login via Azure CLI'
         uses: azure/login@v1
         with:
@@ -111,3 +110,4 @@ jobs:
       - name: 'Logout'
         run: |
           az logout
+        if: steps.check_commit_deploy.outputs.should_deploy == 'true'

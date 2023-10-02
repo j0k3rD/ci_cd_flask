@@ -19,10 +19,16 @@ jobs:
         shell: bash
         working-directory: ${{ github.workspace }}
     steps:
+      - name: 'Check Commit Message'
+        id: check_commit
+        run: echo ::set-output name=should_push::$(if [[ "${{ github.event.head_commit.message }}" != *"deploy"* && "${{ github.event.head_commit.message }}" != *"build"* ]]; then echo "true"; else echo "false"; fi)
+
       - name: 'Push to Remote Repository'
         run: |
-          git push origin main
-              
+          if [[ "${{ steps.check_commit.outputs.should_push }}" == "true" ]]; then
+            git push origin main
+          fi
+
   build:
     runs-on: ubuntu-latest
     defaults:

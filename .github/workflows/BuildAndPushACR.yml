@@ -30,7 +30,11 @@ jobs:
       - run: |
           if [[ "${{ steps.check_commit.outputs.should_build }}" == "true" ]]; then
             echo "Commit message does not contain 'deploy' or 'build'."
+            echo "Skipping build and deploy steps."
+
+            exit 0
           fi
+        if: steps.check_commit.outputs.should_build == 'false'
 
   build:
     runs-on: ubuntu-latest

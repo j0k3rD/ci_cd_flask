@@ -83,7 +83,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    if: ${{ needs.build.outputs.should_build == 'true' }} && ${{ needs.build.outputs.tag_version != ''}}
+    if: ${{ needs.build.outputs.should_build == 'true' }} && ${{ needs.build.outputs.tag != ''}}
     defaults:
       run:
         shell: bash

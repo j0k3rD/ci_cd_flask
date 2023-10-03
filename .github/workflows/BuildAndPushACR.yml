@@ -64,15 +64,12 @@ jobs:
         run: |
           echo ::set-output name=should_build::$(if [[ "${{ github.event.head_commit.message }}" == *"deploy"* ]]; then echo "true"; elif [[ "${{ github.event.head_commit.message }}" == *"build"* ]]; then echo "false"; fi)
 
-      - name: Docker login
-        uses: docker/login-action@v2
+      - name: Login via Docker
+        uses: azure/docker-login@v1
         with:
-          registry: ${{ secrets.ACR_NAME }}.azurecr.io
+          login-server: ${{ secrets.ACR_NAME }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
-          ecr: 'false'
-          logout: 'true'
-        
       - run: |
           if [[ "${{ steps.check_commit_build.outputs.should_build }}" == "false" ]] || [[ "${{ steps.check_commit_build.outputs.should_build }}" == "true" ]]; then
             docker build . -t ${{ secrets.ACR_NAME }}/${{ env.REPO_NAME }}:${{ steps.tag.outputs.tag }}

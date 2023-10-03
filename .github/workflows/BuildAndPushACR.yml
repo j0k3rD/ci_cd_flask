@@ -48,7 +48,6 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ${{ github.workspace }}
     steps:
       - name: Checkout GitHub Action
         uses: actions/checkout@v3
@@ -82,7 +81,6 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ${{ github.workspace }}
     steps:
       - name: 'Check Commit Message'
         id: check_commit_deploy

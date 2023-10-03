@@ -52,14 +52,14 @@ jobs:
         shell: bash
         working-directory: ${{ github.workspace }}
     steps:
-      - name: Checkout code
+      - name: Checkout GitHub Action
         uses: actions/checkout@v3
 
       - name: Get Tag
         id: tag
         uses: dawidd6/action-get-tag@v1.1.0
       
-      - name: 'Check Commit Message'
+      - name: Check Commit Message
         id: check_commit_build
         run: |
           echo ::set-output name=should_build::$(if [[ "${{ github.event.head_commit.message }}" == *"deploy"* ]]; then echo "true"; elif [[ "${{ github.event.head_commit.message }}" == *"build"* ]]; then echo "false"; fi)
@@ -76,7 +76,7 @@ jobs:
       - run: |
           if [[ "${{ steps.check_commit_build.outputs.should_build }}" == "false" ]] || [[ "${{ steps.check_commit_build.outputs.should_build }}" == "true" ]]; then
             docker build . -t ${{ secrets.ACR_NAME }}/${{ env.REPO_NAME }}:${{ steps.tag.outputs.tag }}
-            docker push ${{ env.IMAGE_NAME }}/${{ env.REPO_NAME }}:${{ steps.tag.outputs.tag }}
+            docker push ${{ secrets.ACR_NAME }}/${{ env.REPO_NAME }}:${{ steps.tag.outputs.tag }}
           fi
         if: steps.check_commit_build.outputs.should_build == 'true' || steps.check_commit_build.outputs.should_build == 'false'
         

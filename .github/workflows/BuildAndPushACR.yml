@@ -18,7 +18,6 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ${{ github.workspace }}
     outputs:
       should_build: ${{ steps.check_commit.outputs.should_build }}
     steps:

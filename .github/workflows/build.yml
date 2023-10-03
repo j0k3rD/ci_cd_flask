@@ -9,7 +9,6 @@ env:
 on:
   push:
     tags: ['v*.*.*']
-    branches: [main]
 
 permissions:
     id-token: write
@@ -46,7 +45,7 @@ jobs:
     needs: push
     outputs:
       should_build: ${{ steps.check_commit_build.outputs.should_build }}
-      tag: ${{ steps.tag_version.outputs.tag }}
+      tag: ${{ steps.tag.outputs.tag }}
     if: ${{ needs.push.outputs.should_build == 'true' }}
     defaults:
       run:

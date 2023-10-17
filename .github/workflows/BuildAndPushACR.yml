@@ -128,7 +128,6 @@ jobs:
           cpu: 1
           memory: 1
           environment-variables: OTEL_SERVICE_NAME= ${{ env.OTEL_SERVICE_NAME }}
-          # secure-environment-variables: CONNECTION_STRING= ${{ secrets.APPLICATIONINSIGHTS_CONNECTION_STRING }}
 
         if: steps.check_commit_deploy.outputs.should_deploy == 'true'
 

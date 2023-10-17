@@ -50,7 +50,7 @@ trace.get_tracer_provider().add_span_processor(
 
 @app.route('/')
 def index():
-    return flask.jsonify({'message': 'Hello World! DEPLOY with INSIGHTS!!'})
+    return flask.jsonify({'message': 'Hello World! DEPLOY!!'})
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000, host='0.0.0.0')

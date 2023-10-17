@@ -15,16 +15,16 @@ dotenv.load_dotenv()
 
 trace.set_tracer_provider(
     TracerProvider(
-        resource=Resource.create({SERVICE_NAME: os.getenv.OTEL_SERVICE_NAME})
+        resource=Resource.create({SERVICE_NAME: os.environ.get('OTEL_SERVICE_NAME')})
     )
 )
 
 logging.basicConfig(level=logging.DEBUG)
 app_logger = logging.getLogger(__name__)
 
-app_logger.debug(f"APPLICATIONINSIGHTS_CONNECTION_STRING: {os.getenv.CONNECTION_STRING}")
-app_logger.debug(f"OTEL_SERVICE_NAME: {os.getenv.OTEL_SERVICE_NAME}")
-app_logger.debug(f"OTEL_TRACES_SAMPLER_ARG: {os.getenv.OTEL_TRACES_SAMPLER_ARG}")
+app_logger.debug(f"APPLICATIONINSIGHTS_CONNECTION_STRING: {os.environ.get('CONNECTION_STRING')}")
+app_logger.debug(f"OTEL_SERVICE_NAME: {os.environ.get('OTEL_SERVICE_NAME')}")
+app_logger.debug(f"OTEL_TRACES_SAMPLER_ARG: {os.environ.get('OTEL_TRACES_SAMPLER_ARG')}")
 
 # Enable tracing for Flask library
 FlaskInstrumentor().instrument_app(app)
@@ -33,7 +33,7 @@ FlaskInstrumentor().instrument_app(app)
 RequestsInstrumentor().instrument()
 
 trace_exporter = AzureMonitorTraceExporter(
-    connection_string=os.getenv.CONNECTION_STRING
+    connection_string=os.environ.get('CONNECTION_STRING')
 )
 
 trace.get_tracer_provider().add_span_processor(

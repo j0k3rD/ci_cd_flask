@@ -127,7 +127,7 @@ jobs:
           ports: 5000
           cpu: 1
           memory: 1
-          environment-variables: OTEL_SERVICE_NAME= ${{ env.OTEL_SERVICE_NAME }}
+          environment-variables: OTEL_SERVICE_NAME=flaskapp-monitor
 
         if: steps.check_commit_deploy.outputs.should_deploy == 'true'
 

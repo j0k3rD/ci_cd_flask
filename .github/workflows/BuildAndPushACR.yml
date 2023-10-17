@@ -1,8 +1,5 @@
 name: GitHub Actions Flask-HelloWorld
 
-env:
-  OTEL_SERVICE_NAME: flaskapp
-
 on:
   push:
     tags: ['v*.*.*']

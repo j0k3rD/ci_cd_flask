@@ -24,7 +24,6 @@ app_logger = logging.getLogger(__name__)
 
 app_logger.debug(f"APPLICATIONINSIGHTS_CONNECTION_STRING: {os.environ.get('CONNECTION_STRING')}")
 app_logger.debug(f"OTEL_SERVICE_NAME: {os.environ.get('OTEL_SERVICE_NAME')}")
-app_logger.debug(f"OTEL_TRACES_SAMPLER_ARG: {os.environ.get('OTEL_TRACES_SAMPLER_ARG')}")
 
 # Enable tracing for Flask library
 FlaskInstrumentor().instrument_app(app)
@@ -42,7 +41,7 @@ trace.get_tracer_provider().add_span_processor(
 
 @app.route('/')
 def index():
-    return flask.jsonify({'message': 'Hello World! DEPLOY!!'})
+    return flask.jsonify({'message': 'Hello World! DEPLOY!! 31 Oct'})
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000, host='0.0.0.0')

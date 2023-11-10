@@ -28,6 +28,7 @@ config.load_env_variables()
 CONNECTION_STRING = config.CONNECTION_STRING
 OTEL_SERVICE_NAME = config.OTEL_SERVICE_NAME
 
+
 logger_provider = LoggerProvider()
 set_logger_provider(logger_provider)
 exporter = AzureMonitorLogExporter(
